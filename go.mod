@@ -1,4 +1,4 @@
-module github.com/superturkey650/go-qbittorrent
+module github.com/imerkle/go-qbittorrent
 
 go 1.14
 
