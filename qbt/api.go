@@ -43,6 +43,7 @@ func delimit(items []string, delimiter string) (delimited string) {
 type Client struct {
 	http          *http.Client
 	URL           string
+	Domain        string
 	Authenticated bool
 	Jar           http.CookieJar
 }
@@ -57,6 +58,7 @@ func NewClient(url string) *Client {
 	}
 
 	client.URL = url
+	client.Domain = url[0 : len(url)-1]
 
 	// create cookie jar
 	client.Jar, _ = cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
@@ -237,7 +239,8 @@ func (client *Client) Login(opts LoginOptions) (err error) {
 		"password": opts.Password,
 	}
 
-	resp, err := client.post("api/v2/auth/login", params, reqHeader{Key: "Referer", Val: client.URL})
+	resp, err := client.post("api/v2/auth/login", params,
+		reqHeader{Key: "Origin", Val: client.Domain}, reqHeader{Key: "Referer", Val: client.URL})
 	if err != nil {
 		return err
 	} else if resp.StatusCode == 403 {
