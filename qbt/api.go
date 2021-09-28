@@ -701,7 +701,7 @@ func (client *Client) MinPriority(hashes []string) (bool, error) {
 //FilePriority for a torrent
 func (client *Client) FilePriority(hash string, ids []string, priority int) (bool, error) {
 	opts := map[string]string{
-		"hashes":   hash,
+		"hash":     hash,
 		"id":       delimit(ids, "|"),
 		"priority": strconv.Itoa(priority),
 	}
