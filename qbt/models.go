@@ -2,27 +2,49 @@ package qbt
 
 //BasicTorrent holds a basic torrent object from qbittorrent
 type BasicTorrent struct {
-	Category               string `json:"category"`
-	CompletionOn           int64  `json:"completion_on"`
-	Dlspeed                int    `json:"dlspeed"`
-	Eta                    int    `json:"eta"`
-	ForceStart             bool   `json:"force_start"`
-	Hash                   string `json:"hash"`
-	Name                   string `json:"name"`
-	NumComplete            int    `json:"num_complete"`
-	NumIncomplete          int    `json:"num_incomplete"`
-	NumLeechs              int    `json:"num_leechs"`
-	NumSeeds               int    `json:"num_seeds"`
-	Priority               int    `json:"priority"`
-	Progress               int    `json:"progress"`
-	Ratio                  int    `json:"ratio"`
-	SavePath               string `json:"save_path"`
-	SeqDl                  bool   `json:"seq_dl"`
-	Size                   int    `json:"size"`
-	State                  string `json:"state"`
-	SuperSeeding           bool   `json:"super_seeding"`
-	Upspeed                int    `json:"upspeed"`
-	FirstLastPiecePriority bool   `json:"f_l_piece_prio"`
+	AddedOn                int64   `json:"added_on"`
+	AmountLeft             int64   `json:"amount_left"`
+	AutoTMM                bool    `json:"auto_tmm"`
+	Availability           float64 `json:"availability"`
+	Category               string  `json:"category"`
+	Completed              int64   `json:"completed"`
+	CompletionOn           int64   `json:"completion_on"`
+	ContentPath            string  `json:"content_path"`
+	DlLimit                int     `json:"dl_limit"`
+	Dlspeed                int     `json:"dlspeed"`
+	Downloaded             int64   `json:"downloaded"`
+	DownloadedSession      int64   `json:"downloaded_session"`
+	Eta                    int64   `json:"eta"`
+	FirstLastPiecePriority bool    `json:"f_l_piece_prio"`
+	ForceStart             bool    `json:"force_start"`
+	Hash                   string  `json:"hash"`
+	LastActivity           int64   `json:"last_activity"`
+	MagnetURI              string  `json:"magnet_uri"`
+	MaxRatio               float64 `json:"max_ratio"`
+	MaxSeedingTime         int64   `json:"max_seeding_time"`
+	Name                   string  `json:"name"`
+	NumComplete            int     `json:"num_complete"`
+	NumIncomplete          int     `json:"num_incomplete"`
+	NumLeechs              int     `json:"num_leechs"`
+	NumSeeds               int     `json:"num_seeds"`
+	Priority               int     `json:"priority"`
+	Progress               float64 `json:"progress"`
+	Ratio                  float64 `json:"ratio"`
+	SavePath               string  `json:"save_path"`
+	SeedingTime            int64   `json:"seeding_time"`
+	SeenComplete           int64   `json:"seen_complete"`
+	SeqDl                  bool    `json:"seq_dl"`
+	Size                   int64   `json:"size"`
+	State                  string  `json:"state"`
+	SuperSeeding           bool    `json:"super_seeding"`
+	Tags                   string  `json:"tags"`
+	TimeActive             int64   `json:"time_active"`
+	TotalSize              int64   `json:"total_size"`
+	Tracker                string  `json:"tracker"`
+	UpLimit                int     `json:"up_limit"`
+	Uploaded               int64   `json:"uploaded"`
+	UploadedSession        int64   `json:"uploaded_session"`
+	Upspeed                int     `json:"upspeed"`
 }
 
 //Torrent holds a torrent object from qbittorrent
@@ -286,7 +308,7 @@ type LoginOptions struct {
 
 //AddTrackersOptions contains all options for /addTrackers endpoint
 type AddTrackersOptions struct {
-	Hash string
+	Hash     string
 	Trackers []string
 }
 
@@ -299,6 +321,6 @@ type EditTrackerOptions struct {
 
 //RemoveTrackersOptions contains all options for /removeTrackers endpoint
 type RemoveTrackersOptions struct {
-	Hash string
+	Hash     string
 	Trackers []string
 }
