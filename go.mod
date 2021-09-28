@@ -1,4 +1,4 @@
-module github.com/imerkle/go-qbittorrent
+module github.com/nohajc/go-qbittorrent
 
 go 1.14
 

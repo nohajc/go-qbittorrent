@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/superturkey650/go-qbittorrent/qbt"
+	"github.com/nohajc/go-qbittorrent/qbt"
 )
 
 func main() {
