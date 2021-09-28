@@ -93,8 +93,13 @@ func (client *Client) get(endpoint string, opts map[string]string) (*http.Respon
 	return resp, nil
 }
 
+type reqHeader struct {
+	Key string
+	Val string
+}
+
 //post will perform a POST request with no content-type specified
-func (client *Client) post(endpoint string, opts map[string]string) (*http.Response, error) {
+func (client *Client) post(endpoint string, opts map[string]string, headers ...reqHeader) (*http.Response, error) {
 	req, err := http.NewRequest("POST", client.URL+endpoint, nil)
 	if err != nil {
 		return nil, wrapper.Wrap(err, "failed to build request")
@@ -104,6 +109,10 @@ func (client *Client) post(endpoint string, opts map[string]string) (*http.Respo
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	// add user-agent header to allow qbittorrent to identify us
 	req.Header.Set("User-Agent", "go-qbittorrent v0.1")
+
+	for _, h := range headers {
+		req.Header.Set(h.Key, h.Val)
+	}
 
 	// add optional parameters that the user wants
 	if opts != nil {
@@ -228,7 +237,7 @@ func (client *Client) Login(opts LoginOptions) (err error) {
 		"password": opts.Password,
 	}
 
-	resp, err := client.post("api/v2/auth/login", params)
+	resp, err := client.post("api/v2/auth/login", params, reqHeader{Key: "Referer", Val: client.URL})
 	if err != nil {
 		return err
 	} else if resp.StatusCode == 403 {
