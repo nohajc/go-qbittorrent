@@ -102,7 +102,15 @@ type reqHeader struct {
 
 //post will perform a POST request with no content-type specified
 func (client *Client) post(endpoint string, opts map[string]string, headers ...reqHeader) (*http.Response, error) {
-	req, err := http.NewRequest("POST", client.URL+endpoint, nil)
+	form := url.Values{}
+	// add optional parameters that the user wants
+	if opts != nil {
+		for k, v := range opts {
+			form.Add(k, v)
+		}
+	}
+
+	req, err := http.NewRequest("POST", client.URL+endpoint, strings.NewReader(form.Encode()))
 	if err != nil {
 		return nil, wrapper.Wrap(err, "failed to build request")
 	}
@@ -114,15 +122,6 @@ func (client *Client) post(endpoint string, opts map[string]string, headers ...r
 
 	for _, h := range headers {
 		req.Header.Set(h.Key, h.Val)
-	}
-
-	// add optional parameters that the user wants
-	if opts != nil {
-		form := url.Values{}
-		for k, v := range opts {
-			form.Add(k, v)
-		}
-		req.PostForm = form
 	}
 
 	resp, err := client.http.Do(req)
